@@ -1,0 +1,14 @@
+#!/bin/bash
+
+USER=""
+SERVER=""
+
+echo Please enter the Applications you want to build packages for seperated by a space e.g. Firefox Thunderbird GoogleChrome
+read  -a array -p 'Applications: '
+
+# Run through the array to run autopkg
+for i in ${array[@]}
+do
+    echo "Running pkg build for $i"
+    ssh $USER@$SERVER "/usr/local/bin/autopkg run $i"
+done
