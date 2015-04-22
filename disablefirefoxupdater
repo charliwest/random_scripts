@@ -1,0 +1,14 @@
+#!/bin/bash
+
+if [ -e /Applications/Firefox.app/Contents/Resources/defaults/pref/channel-prefs.js ]; then
+            cp /Applications/Firefox.app/Contents/Resources/defaults/pref/channel-prefs.js /private/tmp/firefox.js
+            echo "s/release/none/g" > /private/tmp/firefox.sed
+            sed -f /private/tmp/firefox.sed /private/tmp/firefox.js > /private/tmp/channel-prefs.js
+            rm /Applications/Firefox.app/Contents/Resources/defaults/pref/channel-prefs.js
+            mv /private/tmp/channel-prefs.js /Applications/Firefox.app/Contents/Resources/defaults/pref/
+            rm -rf /Applications/Firefox.app/Contents/MacOS/updater.app
+            rm /Applications/Firefox.app/Contents/Resources/update-settings.ini
+            rm /Applications/Firefox.app/Contents/Resources/updater.ini
+            exit 0
+fi
+exit 0
