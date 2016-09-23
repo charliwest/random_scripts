@@ -1,7 +1,6 @@
 #!/bin/bash
-unzip -qq -o -d /tmp/ ~/Downloads/JSSInstallation*.zip
-unzip -qq -o -d /tmp/JSS ~/tmp/JSSInstallation/JSS\ Components/ROOT.war
-#Set a more linux friendly logging location
+unzip -qq -o -d /tmp/JSS ~/Downloads/JSSInstallation/JSS\ Components/ROOT.war
+
 OLD="Library\/JSS\/Logs"
 NEW="var\/log\/JSS"
 DPATH="/tmp/JSS/WEB-INF/classes/log4j.properties"
@@ -19,9 +18,8 @@ do
 done
 /bin/rm $TFILE
 
-#Replace the password for db access
 OLD2="jamfsw03"
-NEW2="NewPassword"
+NEW2="YOUR_PASSWORD"
 DPATH2="/tmp/JSS/WEB-INF/xml/DataBase.xml"
 BPATH2="/tmp"
 TFILE2="/tmp/out.tmp.$$"
@@ -35,12 +33,20 @@ do
    echo "Error: Cannot read $f"
   fi
 done
-echo 'Files edited'
-cd /tmp/JSS ;
-echo 'Building WAR file'
-zip -r -qq /tmp/ROOT.war *
-echo 'Cleaning up'
-/bin/rm -rf /tmp/JSS
 /bin/rm $TFILE2
-/bin/rm /tmp/log4j.properties /tmp/DataBase.xml
-echo 'All done'
+
+OLD3="localhost"
+NEW3="YOUR_DB_SERVER"
+DPATH3="/tmp/JSS/WEB-INF/xml/DataBase.xml"
+BPATH3="/tmp"
+TFILE3="/tmp/out.tmp.$$"
+[ ! -d $BPATH3 ] && mkdir -p $BPATH3 || :
+for f in $DPATH3
+do
+  if [ -f $f -a -r $f ]; then
+    /bin/cp -f $f $BPATH3
+   sed "s/$OLD3/$NEW3/g" "$f" > $TFILE3 && mv $TFILE3 "$f"
+  else
+   echo "Error: Cannot read $f"
+  fi
+done
