@@ -50,3 +50,11 @@ do
    echo "Error: Cannot read $f"
   fi
 done
+echo 'Files edited'
+cd /tmp/JSS ;
+echo 'Building WAR file'
+zip -r -qq /Users/dwest/Documents/kerodon.war *
+echo 'Cleaning up'
+/bin/rm -rf /tmp/JSS /tmp/log4j.properties /tmp/DataBase.xml
+echo 'All done'
+exit 0
