@@ -53,7 +53,7 @@ done
 echo 'Files edited'
 cd /tmp/JSS ;
 echo 'Building WAR file'
-zip -r -qq /Users/dwest/Documents/kerodon.war *
+zip -r -qq ~/Documents/NEW_ROOT.war *
 echo 'Cleaning up'
 /bin/rm -rf /tmp/JSS /tmp/log4j.properties /tmp/DataBase.xml
 echo 'All done'
