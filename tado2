@@ -1,0 +1,12 @@
+#!/bin/bash
+USERNAME=your@email.com
+PASSWORD=yourPassword
+curl --silent "https://my.tado.com/mobile/1.9/getCurrentState?username=$USERNAME&password=$PASSWORD" > temp
+insideTemp=$(grep -o "insideTemp.*" temp| awk '{print substr($1,13,4)}')
+setPointTemp=$(grep -o "setPointTemp.*" temp| awk '{print substr($1,15,4)}')
+heatingOn=$(if grep -q "\"heatingOn\"\:true" temp; then
+echo '\xf0\x9f\x94\xa5'
+else
+echo '\xf0\x9f\x9a\xab'
+fi)
+echo "$insideTemp" / "$setPointTemp" / "$heatingOn"
